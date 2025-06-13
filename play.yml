@@ -8,6 +8,12 @@
         dest: ./tfc/main.tf
         mode: '0644'
       delegate_to: localhost
+    - name: TF deploy of a service
+      cloud.terraform.terraform:
+        project_path: './tfc'
+        state: present
+        force_init: true
+        workspace: terraform_default
     - name: output
       cloud.terraform.terraform_output:
         project_path: './tfc'
