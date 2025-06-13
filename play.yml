@@ -17,5 +17,11 @@
     - name: output
       cloud.terraform.terraform_output:
         project_path: './tfc'
+      register: tf_output
+    - name: Display Terraform output
+      debug:
+        var: tf_output
+
+    
 
     
