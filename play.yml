@@ -21,6 +21,7 @@
     # - name: Display Terraform output
     #   debug:
     #     var: tf_output
+    
     - name: Generate planfile by running Terraform plan
       cloud.terraform.terraform:
         project_path: './tfc'
@@ -43,18 +44,7 @@
     - name: Display Terraform output
       debug:
         var: stash_plan_var
-    
-    - name: Load a terraform plan file data from variable 'stashed_plan' into file 'tfplan'
-      cloud.terraform.plan_stash:
-        path: /tmp/tfc-cloud/tfc/tfplan.json
-        var_name:  stash_plan_var
-        state: load
-      register: new_load
-    - name: Display Terraform output
-      debug:
-        var: new_load
-
-    - name: Clone GitHub repo
+     - name: Clone GitHub repo
       ansible.builtin.command:
         cmd: git clone https://{{ git_token }}@github.com/kaushiki069/tfc-cloud.git /tmp/tfc-cloud
 
@@ -70,6 +60,18 @@
         cmd: git config user.email "aap@example.com"
       args:
         chdir: /tmp/tfc-cloud
+        
+    - name: Load a terraform plan file data from variable 'stashed_plan' into file 'tfplan'
+      cloud.terraform.plan_stash:
+        path: /tmp/tfc-cloud/tfc/tfplan.json
+        var_name:  stash_plan_var
+        state: load
+      register: new_load
+    - name: Display Terraform output
+      debug:
+        var: new_load
+
+   
 
     - name: Add tfplan.json to Git
       ansible.builtin.command:
