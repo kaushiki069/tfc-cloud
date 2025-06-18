@@ -59,6 +59,30 @@
         dest: ./tfc
         version: main
         force: yes
+    - name: Configure Git user (needed to commit)
+      ansible.builtin.command:
+        cmd: git config user.name "AAP Bot" && git config user.email "aap@example.com"
+      args:
+        chdir: ./tfc
+
+    - name: Add tfplan.json to Git
+      ansible.builtin.command:
+        cmd: git add tfplan.json
+      args:
+        chdir: ./tfc
+    - name: Commit tfplan.json
+      ansible.builtin.command:
+        cmd: git commit -m "Update tfplan.json via AAP"
+      args:
+        chdir: ./tfc
+      ignore_errors: true  # skip if no changes
+    
+    - name: Push changes to GitHub
+      ansible.builtin.command:
+        cmd: git push https://{{ git_token }}@github.com/kaushiki069/tfc-cloud.git HEAD:main
+      args:
+        chdir: ./tfc
+
 
 
 
