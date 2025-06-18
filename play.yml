@@ -44,7 +44,8 @@
     - name: Display Terraform output
       debug:
         var: stash_plan_var
-     - name: Clone GitHub repo
+        
+    - name: Clone GitHub repo
       ansible.builtin.command:
         cmd: git clone https://{{ git_token }}@github.com/kaushiki069/tfc-cloud.git /tmp/tfc-cloud
 
