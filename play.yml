@@ -53,6 +53,32 @@
     - name: Display Terraform output
       debug:
         var: new_load
+    - name: Configure Git with token-based HTTPS URL
+      ansible.builtin.command:
+        cmd: git remote set-url origin https://{{ git_token }}@github.com/kaushiki069/tfc-cloud.git
+      args:
+        chdir: ./tfc
+      no_log: true
+      
+      - name: Add tfplan.json to Git
+      ansible.builtin.command:
+        cmd: git add tfplan.json
+      args:
+        chdir: ./tfc
+      
+      - name: Commit tfplan.json
+      ansible.builtin.command:
+        cmd: git commit -m "Update tfplan.json via AAP"
+      args:
+        chdir: ./tfc
+      ignore_errors: true
+      
+      - name: Push changes to GitHub
+      ansible.builtin.command:
+        cmd: git push origin main
+      args:
+        chdir: ./tfc
+
 
     
 
