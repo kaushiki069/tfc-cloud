@@ -8,19 +8,47 @@
         dest: ./tfc/main.tf
         mode: '0644'
       delegate_to: localhost
-    - name: TF deploy of a service
+    # - name: TF deploy of a service
+    #   cloud.terraform.terraform:
+    #     project_path: './tfc'
+    #     state: present
+    #     force_init: true
+    #     workspace: terraform_default
+    # - name: output
+    #   cloud.terraform.terraform_output:
+    #     project_path: './tfc'
+    #   register: tf_output
+    # - name: Display Terraform output
+    #   debug:
+    #     var: tf_output
+    - name: Generate planfile by running Terraform plan
       cloud.terraform.terraform:
         project_path: './tfc'
-        state: present
         force_init: true
+        plan_file: xyz
+        state: present
         workspace: terraform_default
-    - name: output
-      cloud.terraform.terraform_output:
-        project_path: './tfc'
-      register: tf_output
+      check_mode: true
+    - name: Encode a terraform plan file into terraform_plan variable
+      cloud.terraform.plan_stash:
+        path: ./tfc/xyz
+        state: stash
+        var_name:  stashed_plan
+      register: new_stash
+
+    - name: fetch in a variable
+      ansible.builtin.set_fact:
+        stash_plan_var: "{{ new_stash['ansible_stats']['data']['stashed_plan'] }}"
+
     - name: Display Terraform output
       debug:
-        var: tf_output
+        var: stash_plan_var
+    
+    - name: Load a terraform plan file data from variable 'stashed_plan' into file 'tfplan'
+      cloud.terraform.plan_stash:
+        path: ./tfc/tfplan.json
+        var_name:  stash_plan_var
+        state: load
 
     
 
