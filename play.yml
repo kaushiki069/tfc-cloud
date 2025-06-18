@@ -53,12 +53,7 @@
     - name: Display Terraform output
       debug:
         var: new_load
-    - name: Clone the Git repo using PAT
-      community.general.git:
-        repo: https://{{ git_token }}@github.com/kaushiki069/tfc-cloud.git
-        dest: ./tfc
-        version: main
-        force: yes
+
     - name: Configure Git user (needed to commit)
       ansible.builtin.command:
         cmd: git config user.name "AAP Bot" && git config user.email "aap@example.com"
