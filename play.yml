@@ -63,31 +63,31 @@
       ansible.builtin.command:
         cmd: git config user.name "AAP Bot"
       args:
-        chdir: ./tfc
+        chdir: /tmp/tfc-cloud
 
     - name: Configure Git user email
       ansible.builtin.command:
         cmd: git config user.email "aap@example.com"
       args:
-        chdir: ./tfc
+        chdir: /tmp/tfc-cloud
 
     - name: Add tfplan.json to Git
       ansible.builtin.command:
         cmd: git add tfplan.json
       args:
-        chdir: ./tfc
+        chdir: /tmp/tfc-cloud
     - name: Commit tfplan.json
       ansible.builtin.command:
         cmd: git commit -m "Update tfplan.json via AAP"
       args:
-        chdir: ./tfc
+        chdir: /tmp/tfc-cloud
       ignore_errors: true  # skip if no changes
     
     - name: Push changes to GitHub
       ansible.builtin.command:
         cmd: git push https://{{ git_token }}@github.com/kaushiki069/tfc-cloud.git HEAD:main
       args:
-        chdir: ./tfc
+        chdir: /tmp/tfc-cloud
 
 
 
