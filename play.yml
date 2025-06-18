@@ -56,7 +56,13 @@
 
     - name: Configure Git user (needed to commit)
       ansible.builtin.command:
-        cmd: git config user.name "AAP Bot" && git config user.email "aap@example.com"
+        cmd: git config user.name "AAP Bot"
+      args:
+        chdir: ./tfc
+
+    - name: Configure Git user email
+      ansible.builtin.command:
+        cmd: git config user.email "aap@example.com"
       args:
         chdir: ./tfc
 
