@@ -60,20 +60,20 @@
         chdir: ./tfc
       no_log: true
       
-      - name: Add tfplan.json to Git
+    - name: Add tfplan.json to Git
       ansible.builtin.command:
         cmd: git add tfplan.json
       args:
         chdir: ./tfc
       
-      - name: Commit tfplan.json
+    - name: Commit tfplan.json
       ansible.builtin.command:
         cmd: git commit -m "Update tfplan.json via AAP"
       args:
         chdir: ./tfc
       ignore_errors: true
       
-      - name: Push changes to GitHub
+    - name: Push changes to GitHub
       ansible.builtin.command:
         cmd: git push origin main
       args:
