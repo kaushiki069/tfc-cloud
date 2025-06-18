@@ -46,7 +46,7 @@
     
     - name: Load a terraform plan file data from variable 'stashed_plan' into file 'tfplan'
       cloud.terraform.plan_stash:
-        path: ./tfc/tfplan.json
+        path: /tmp/tfc-cloud/tfc/tfplan.json
         var_name:  stash_plan_var
         state: load
       register: new_load
@@ -73,7 +73,7 @@
 
     - name: Add tfplan.json to Git
       ansible.builtin.command:
-        cmd: git add tfplan.json
+        cmd: git add tfc/tfplan.json
       args:
         chdir: /tmp/tfc-cloud
     - name: Commit tfplan.json
