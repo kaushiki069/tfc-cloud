@@ -49,6 +49,10 @@
         path: ./tfc/tfplan.json
         var_name:  stash_plan_var
         state: load
+      register: new_load
+    - name: Display Terraform output
+      debug:
+        var: new_load
 
     
 
