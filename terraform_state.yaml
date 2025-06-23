@@ -1,0 +1,8 @@
+plugin: cloud.terraform.terraform_state
+name: Using the cloud block
+backend_type: cloud
+backend_config:
+  hostname: app.terraform.io
+  organization: Ansible-BU-TFC
+  workspaces:
+    name: terraform_default
