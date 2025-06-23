@@ -1,0 +1,14 @@
+- name: Use Terraform state as dynamic inventory
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Show host
+      debug:
+        msg: "{{ inventory_hostname }}"
+
+    - name: Show attributes
+      debug:
+        var: hostvars[inventory_hostname]
+
+
